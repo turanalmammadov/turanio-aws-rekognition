@@ -1,0 +1,39 @@
+{
+  "name": "talm-reccompface",
+  "version": "0.0.2",
+  "description": "Recongnize and compare faces using AWS Rekognition API",
+  "main": "server.js",
+  "dependencies": {
+    "aws-sdk": "^2.224.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "t.almammado@talentasolutions.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turanalmammadov/aws-rekognition.git"
+  },
+  "keywords": [
+    "aws",
+    "rekognition",
+    "aws-rekognition",
+    "image-processing",
+    "face-detection",
+    "face-recognition"
+  ],
+  "bugs": {
+    "url": "https://github.com/turanalmammadov/aws-rekognition/issues"
+  },
+  "homepage": "https://github.com/turanalmammadov/aws-rekognition#readme"
+}
