@@ -25,7 +25,3 @@ Run the server:
 
 ```
 npm start
-<<<<<<< HEAD
-
-=======
->>>>>>> 8b7491a34767ac20d57f8f28678aa5ca795bab92
