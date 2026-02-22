@@ -1,0 +1,70 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Environment and Configuration
+.env
+.env.local
+.env.*.local
+assets/aws-config.json
+assets/awsconfig.json
+
+# SSL Certificates (never commit private keys!)
+*.pem
+*.key
+*.crt
+*.cert
+assets/key.pem
+assets/certificate.pem
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+
+# Saved images from testing
+leftImage.png
+rightImage.png
+*.png
+*.jpg
+*.jpeg
+!assets/*.png
+!assets/*.jpg
+
+# AWS
+.aws/
+aws-exports.js
+
+# Backup files
+*.bak
+*.backup
