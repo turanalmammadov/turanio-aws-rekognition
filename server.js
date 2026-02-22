@@ -51,7 +51,7 @@ app.post('/doFaceAnalysis', async (req, res, next) => {
         res.status(201).send(result)
     } catch(err) {
         console.log('caught exception ', err)
-        res.satus(500).send(err)
+        res.status(500).send(err)
     }
 })
 
