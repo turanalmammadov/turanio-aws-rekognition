@@ -41,35 +41,105 @@ app.use((req, res, next) => {
 })
 
 app.post('/doFaceAnalysis', async (req, res, next) => {
-    const postText = req.body.toString('utf-8')
-    const base64Text = postText.split('base64,')[1]
-    const picData = Buffer.from(base64Text, 'base64')
-
-    let result
     try {
-        result = await detectFaceAWSPromise(picData)
-        res.status(201).send(result)
+        // Validate request body
+        if (!req.body || req.body.length === 0) {
+            return res.status(400).json({
+                success: false,
+                error: 'Request body is required'
+            })
+        }
+
+        const postText = req.body.toString('utf-8')
+        
+        // Validate base64 image data
+        if (!postText.includes('base64,')) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid image format. Expected base64-encoded image data.'
+            })
+        }
+
+        const base64Text = postText.split('base64,')[1]
+        
+        if (!base64Text) {
+            return res.status(400).json({
+                success: false,
+                error: 'No image data found after base64 marker'
+            })
+        }
+
+        const picData = Buffer.from(base64Text, 'base64')
+        
+        // Validate buffer size
+        if (picData.length === 0) {
+            return res.status(400).json({
+                success: false,
+                error: 'Empty image buffer'
+            })
+        }
+
+        const result = await detectFaceAWSPromise(picData)
+        res.status(200).json({
+            success: true,
+            data: result
+        })
     } catch(err) {
-        console.log('caught exception ', err)
-        res.status(500).send(err)
+        console.error('Face analysis error:', err)
+        res.status(500).json({
+            success: false,
+            error: err.message || 'Face analysis failed',
+            code: err.code
+        })
     }
 })
 
 app.post('/doCompare', async (req, res, next) => {
-    const leftPicText = req.body.leftImage.toString('utf-8')
-    const leftBase64Text = leftPicText.split('base64,')[1]
-    const leftBase64Data = Buffer.from(leftBase64Text, 'base64')
-
-    const rightPicText = req.body.rightImage.toString('utf-8')
-    const rightBase64Text = rightPicText.split('base64,')[1]
-    const rightBase64Data = Buffer.from(rightBase64Text, 'base64')
-
-    let compareResult
     try {
-        compareResult = await compareFacesPromiseRaw(leftBase64Data, rightBase64Data)
-        res.status(201).send(compareResult)
+        // Validate request body
+        if (!req.body || !req.body.leftImage || !req.body.rightImage) {
+            return res.status(400).json({
+                success: false,
+                error: 'Both leftImage and rightImage are required'
+            })
+        }
+
+        const leftPicText = req.body.leftImage.toString('utf-8')
+        const leftBase64Text = leftPicText.split('base64,')[1]
+        
+        if (!leftBase64Text) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid leftImage format'
+            })
+        }
+        
+        const leftBase64Data = Buffer.from(leftBase64Text, 'base64')
+
+        const rightPicText = req.body.rightImage.toString('utf-8')
+        const rightBase64Text = rightPicText.split('base64,')[1]
+        
+        if (!rightBase64Text) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid rightImage format'
+            })
+        }
+        
+        const rightBase64Data = Buffer.from(rightBase64Text, 'base64')
+
+        const compareResult = await compareFacesPromiseRaw(leftBase64Data, rightBase64Data)
+        res.status(200).json({
+            success: true,
+            data: compareResult
+        })
     } catch (err) {
-        res.status(500).send(err)
+        console.error('Face comparison error:', err)
+        res.status(500).json({
+            success: false,
+            error: err.message || 'Face comparison failed',
+            code: err.code
+        })
     }
 })
 
