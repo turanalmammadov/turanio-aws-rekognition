@@ -40,6 +40,20 @@ app.use((req, res, next) => {
     next();
 })
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'healthy',
+        service: 'AWS Rekognition API',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        aws: {
+            region: 'us-east-2',
+            service: 'rekognition'
+        }
+    })
+})
+
 app.post('/doFaceAnalysis', async (req, res, next) => {
     try {
         // Validate request body
