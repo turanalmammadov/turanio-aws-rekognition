@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    container_name: aws-rekognition-app
+    ports:
+      - "80:80"
+      - "5555:5555"
+    environment:
+      # AWS credentials - provide these at runtime, never hardcode
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION:-us-east-2}
+      - NODE_ENV=${NODE_ENV:-production}
+    volumes:
+      # Mount SSL certificates if available
+      - ./assets/key.pem:/app/assets/key.pem:ro
+      - ./assets/certificate.pem:/app/assets/certificate.pem:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:80', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
