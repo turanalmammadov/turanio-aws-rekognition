@@ -1,24 +1,26 @@
 {
-  "name": "talm-reccompface",
-  "version": "0.0.2",
-  "description": "Recongnize and compare faces using AWS Rekognition API",
+  "name": "turanio-aws-rekognition",
+  "version": "1.0.0",
+  "description": "Recognize and compare faces using AWS Rekognition API",
   "main": "server.js",
   "dependencies": {
-    "aws-sdk": "^2.224.1",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "aws-sdk": "^2.1692.0",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2"
   },
   "engines": {
-    "node": "8"
+    "node": ">=18"
   },
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "eslint": "^8.57.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start:dev": "NODE_ENV=development node server.js",
+    "test": "echo \"No tests yet - contributions welcome!\" && exit 0",
+    "lint": "eslint ."
   },
-  "author": "t.almammado@talentasolutions.com",
+  "author": "Turan Almammadov",
   "license": "MIT",
   "repository": {
     "type": "git",
